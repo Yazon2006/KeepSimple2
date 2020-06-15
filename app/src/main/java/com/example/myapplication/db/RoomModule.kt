@@ -21,4 +21,11 @@ class RoomModule {
             AppDatabase::class.java, "database-name"
         ).build()
     }
+
+    @Provides
+    fun provideUserDao(
+        appDatabase: AppDatabase
+    ): UserDao {
+        return appDatabase.userDao()
+    }
 }
