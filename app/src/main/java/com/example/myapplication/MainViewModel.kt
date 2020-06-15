@@ -1,6 +1,5 @@
 package com.example.myapplication
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,7 +8,7 @@ import com.example.myapplication.db.User
 import com.example.myapplication.rest.Repo
 import kotlinx.coroutines.launch
 
-class MainViewModel @ViewModelInject constructor(
+class MainViewModel constructor(
     private val repository: ExampleRepository
 ) : ViewModel() {
 

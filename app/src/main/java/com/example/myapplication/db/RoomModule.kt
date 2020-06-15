@@ -1,31 +1,21 @@
 package com.example.myapplication.db
 
-import android.content.Context
 import androidx.room.Room
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
-import dagger.hilt.android.qualifiers.ApplicationContext
+import org.koin.android.ext.koin.androidContext
+import org.koin.dsl.module
 
-@Module
-@InstallIn(ApplicationComponent::class)
-class RoomModule {
+val roomModule = module {
 
-    @Provides
-    fun provideRoom(
-        @ApplicationContext applicationContext: Context
-    ): AppDatabase {
-        return Room.databaseBuilder(
-            applicationContext,
+    single {
+        Room.databaseBuilder(
+            androidContext(),
             AppDatabase::class.java, "database-name"
         ).build()
     }
 
-    @Provides
-    fun provideUserDao(
-        appDatabase: AppDatabase
-    ): UserDao {
-        return appDatabase.userDao()
+    single {
+        val appDatabase: AppDatabase = get()
+        appDatabase.userDao()
     }
+
 }

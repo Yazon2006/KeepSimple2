@@ -6,9 +6,9 @@ import com.example.myapplication.db.UserDao
 import com.example.myapplication.rest.GitHubService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
+import org.koin.dsl.module
 
-class ExampleRepository @Inject constructor(
+class ExampleRepository constructor(
     private val userDao: UserDao,
     private val gitHubService: GitHubService
 ) {
@@ -24,4 +24,8 @@ class ExampleRepository @Inject constructor(
     suspend fun getGithubUserRepos() = withContext(Dispatchers.IO) {
         gitHubService.listRepos("Yazon2006")
     }
+}
+
+val exampleRepositoryModule = module {
+    single { ExampleRepository(get(), get()) }
 }
