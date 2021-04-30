@@ -1,19 +1,22 @@
 package com.example.myapplication
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myapplication.db.User
 import com.example.myapplication.rest.Repo
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class MainViewModel @ViewModelInject constructor(
+@HiltViewModel
+class MainViewModel @Inject constructor(
     private val repository: ExampleRepository
 ) : ViewModel() {
 
-    val liveData = MutableLiveData<List<Repo?>?>()
+    private val mutableLiveData = MutableLiveData<List<Repo?>?>()
+    val liveData: LiveData<List<Repo?>?> = mutableLiveData
 
     fun addUser() {
         viewModelScope.launch {
@@ -27,7 +30,7 @@ class MainViewModel @ViewModelInject constructor(
 
     fun getAllRepos() {
         viewModelScope.launch {
-            liveData.value = repository.getGithubUserRepos()
+            mutableLiveData.postValue(repository.getGithubUserRepos())
         }
     }
 
