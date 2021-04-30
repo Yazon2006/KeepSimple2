@@ -9,7 +9,7 @@ interface GitHubService {
     suspend fun listRepos(@Path("user") user: String): List<Repo?>?
 }
 
-class Repo(
+data class Repo(
     @SerializedName("name")
     val name: String,
     @SerializedName("full_name")
